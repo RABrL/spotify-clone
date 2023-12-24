@@ -11,6 +11,7 @@ const Library = () => {
   const { user } = useUser()
   const onClick = () => {
     if (!user) return onOpen('auth')
+    onOpen('uploadSong')
   }
   return (
     <div className="flex flex-col">
