@@ -10,8 +10,10 @@ const Library = () => {
   const onOpen = useModal((state) => state.onOpen)
   const { user } = useUser()
   const onClick = () => {
-    if (!user) return onOpen('auth')
-    onOpen('uploadSong')
+    if (!user) return onOpen('signIn')
+
+    // TODO: Check for subscription
+    return onOpen('uploadSong')
   }
   return (
     <div className="flex flex-col">

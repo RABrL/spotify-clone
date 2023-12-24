@@ -153,7 +153,7 @@ const Header = ({ children, className }: HeaderProps) => {
             <>
               <div>
                 <Button
-                  onClick={() => onOpen('auth')}
+                  onClick={() => onOpen('signUp')}
                   className="
                   bg-transparent
                   text-neutral-300
@@ -165,7 +165,7 @@ const Header = ({ children, className }: HeaderProps) => {
               </div>
               <div>
                 <Button
-                  onClick={() => onOpen('auth')}
+                  onClick={() => onOpen('signIn')}
                   className="
                   bg-white
                   px-6

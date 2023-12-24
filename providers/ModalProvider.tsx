@@ -2,21 +2,23 @@
 
 import { useEffect, useState } from 'react'
 
-import AuthModal from '@/components/modals/AuthModal'
 import UploadModal from '@/components/modals/UploadModal'
+import SignInModal from '@/components/modals/SignInModal'
+import SignUpModal from '@/components/modals/SignUpModal'
 
 const ModalProvider = () => {
-  const [isMounter, setIsMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
-  if (!isMounter) return null
+  if (!isMounted) return null
 
   return (
     <>
-      <AuthModal />
+      <SignInModal />
+      <SignUpModal />
       <UploadModal />
     </>
   )

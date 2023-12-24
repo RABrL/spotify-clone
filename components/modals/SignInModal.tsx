@@ -8,17 +8,18 @@ import { useRouter } from 'next/navigation'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 import Modal from './Modal'
 import useModal from '@/hooks/useModalStore'
 
-const UploadModal = () => {
+const SignInModal = () => {
   const supabaseClient = useSupabaseClient()
   const router = useRouter()
   const { session } = useSessionContext()
   const { isOpen, onClose, type } = useModal((state) => state)
 
-  const isModalOpen = isOpen && type === 'uploadSong'
+  const isModalOpen = isOpen && type === 'signIn'
 
   useEffect(() => {
     if (session) {
@@ -33,8 +34,8 @@ const UploadModal = () => {
 
   return (
     <Modal
-      title="Upload Your Song"
-      description="Upload your song to the cloud"
+      title="Welcome back"
+      description="Login to your account"
       isOpen={isModalOpen}
       onChange={onChange}
     >
@@ -59,4 +60,4 @@ const UploadModal = () => {
   )
 }
 
-export default UploadModal
+export default SignInModal

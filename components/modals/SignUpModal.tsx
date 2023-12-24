@@ -8,17 +8,18 @@ import { useRouter } from 'next/navigation'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 import Modal from './Modal'
 import useModal from '@/hooks/useModalStore'
 
-const AuthModal = () => {
+const SignUpModal = () => {
   const supabaseClient = useSupabaseClient()
   const router = useRouter()
   const { session } = useSessionContext()
   const { isOpen, onClose, type } = useModal((state) => state)
 
-  const isModalOpen = isOpen && type === 'auth'
+  const isModalOpen = isOpen && type === 'signUp'
 
   useEffect(() => {
     if (session) {
@@ -33,12 +34,13 @@ const AuthModal = () => {
 
   return (
     <Modal
-      title="Welcome back"
-      description="Login to your account"
+      title="Create an account"
+      description="Sign up to upload your own songs and enjoy the good music"
       isOpen={isModalOpen}
       onChange={onChange}
     >
       <Auth
+        view="sign_up"
         theme="dark"
         magicLink
         providers={['github']}
@@ -59,4 +61,4 @@ const AuthModal = () => {
   )
 }
 
-export default AuthModal
+export default SignUpModal
