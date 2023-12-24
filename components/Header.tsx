@@ -8,11 +8,11 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { FaUserAlt } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 
-import useAuthModal from '@/hooks/useAuthModal'
 import { useUser } from '@/hooks/useUser'
 import { cn } from '@/utils/cn'
 
 import Button from './Button'
+import useModal from '@/hooks/useModalStore'
 
 interface HeaderProps {
   children: React.ReactNode
@@ -20,7 +20,7 @@ interface HeaderProps {
 }
 
 const Header = ({ children, className }: HeaderProps) => {
-  const authModal = useAuthModal()
+  const onOpen = useModal((state) => state.onOpen)
   const router = useRouter()
   const supabaseClient = useSupabaseClient()
   const { user } = useUser()
@@ -153,7 +153,7 @@ const Header = ({ children, className }: HeaderProps) => {
             <>
               <div>
                 <Button
-                  onClick={authModal.onOpen}
+                  onClick={() => onOpen('auth')}
                   className="
                   bg-transparent
                   text-neutral-300
@@ -165,7 +165,7 @@ const Header = ({ children, className }: HeaderProps) => {
               </div>
               <div>
                 <Button
-                  onClick={authModal.onOpen}
+                  onClick={() => onOpen('auth')}
                   className="
                   bg-white
                   px-6

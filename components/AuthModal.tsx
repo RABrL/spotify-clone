@@ -9,15 +9,16 @@ import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { useEffect } from 'react'
 
-import useAuthModal from '@/hooks/useAuthModal'
-
 import Modal from './Modal'
+import useModal from '@/hooks/useModalStore'
 
 const AuthModal = () => {
   const supabaseClient = useSupabaseClient()
   const router = useRouter()
   const { session } = useSessionContext()
-  const { isOpen, onClose } = useAuthModal()
+  const { isOpen, onClose, type } = useModal((state) => state)
+
+  const isModalOpen = isOpen && type === 'auth'
 
   useEffect(() => {
     if (session) {
@@ -34,7 +35,7 @@ const AuthModal = () => {
     <Modal
       title="Welcome back"
       description="Login to your account"
-      isOpen={isOpen}
+      isOpen={isModalOpen}
       onChange={onChange}
     >
       <Auth
