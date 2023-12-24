@@ -33,6 +33,7 @@ const ListItem = ({ name, href, image }: ListItemProps) => {
         hover:bg-neutral-100/20
         transition
         pr-4
+        z-[-1]
       "
     >
       <div
