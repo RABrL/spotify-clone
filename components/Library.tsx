@@ -5,8 +5,14 @@ import { AiOutlinePlus } from 'react-icons/ai'
 
 import { useUser } from '@/hooks/useUser'
 import useModal from '@/hooks/useModalStore'
+import { Song } from '@/types'
+import MediaItem from './MediaItem'
 
-const Library = () => {
+interface LibraryProps {
+  songs: Song[]
+}
+
+const Library = ({ songs }: LibraryProps) => {
   const onOpen = useModal((state) => state.onOpen)
   const { user } = useUser()
   const onClick = () => {
@@ -65,7 +71,13 @@ const Library = () => {
           px-3
         "
       >
-        List of Songs
+        {songs.map((song) => (
+          <MediaItem 
+            onClick={() => {}}
+            key={song.id}
+            song={song}
+          />
+        ))}
       </div>
     </div>
   )
