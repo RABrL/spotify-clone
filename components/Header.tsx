@@ -7,6 +7,7 @@ import { HiHome } from 'react-icons/hi'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { FaUserAlt } from 'react-icons/fa'
 import toast from 'react-hot-toast'
+import { useState } from 'react'
 
 import { useUser } from '@/hooks/useUser'
 import { cn } from '@/utils/cn'
@@ -20,12 +21,14 @@ interface HeaderProps {
 }
 
 const Header = ({ children, className }: HeaderProps) => {
+  const [isLoading, setIsLoading] = useState(false)
   const onOpen = useModal((state) => state.onOpen)
   const router = useRouter()
   const supabaseClient = useSupabaseClient()
   const { user } = useUser()
 
   const handleLogout = async () => {
+    setIsLoading(true)
     const { error } = await supabaseClient.auth.signOut()
     // reset any playing songs
 
@@ -35,6 +38,7 @@ const Header = ({ children, className }: HeaderProps) => {
       toast.success('Logged out!')
       router.refresh()
     }
+    setIsLoading(false)
   }
 
   return (
@@ -70,7 +74,7 @@ const Header = ({ children, className }: HeaderProps) => {
             onClick={() => router.back()}
             className="
               rounded-full
-              bg-black
+              bg-neutral-900
               flex
               items-center
               justify-center
@@ -84,7 +88,7 @@ const Header = ({ children, className }: HeaderProps) => {
             onClick={() => router.forward()}
             className="
               rounded-full
-              bg-black
+              bg-neutral-900
               flex
               items-center
               justify-center
@@ -139,7 +143,11 @@ const Header = ({ children, className }: HeaderProps) => {
                 flex gap-x-4 items-center
               "
             >
-              <Button onClick={handleLogout} className="bg-white px-6 py-2">
+              <Button
+                onClick={handleLogout}
+                disabled={isLoading}
+                className="bg-white px-6 py-2"
+              >
                 Logout
               </Button>
               <Button
