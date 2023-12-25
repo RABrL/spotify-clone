@@ -1,8 +1,14 @@
+import getSongs from '@/actions/getSongs'
 import Box from '@/components/Box'
 import Header from '@/components/Header'
 import ListItem from '@/components/ListItem'
+import PageContent from '@/components/PageContent'
 
-export default function Home() {
+export const revalidate = 0
+
+export default async function Home() {
+  const songs = await getSongs()
+
   return (
     <Box
       className="
@@ -41,15 +47,11 @@ export default function Home() {
           </div>
         </div>
       </Header>
-      <div className='mt-2 mb-7 px-6'>
-        <div className='flex justify-between items-center'>
-          <h2 className='text-white text-2xl font-semibold'>
-            Newest songs
-          </h2>
+      <div className="mt-2 mb-7 px-6">
+        <div className="flex justify-between items-center">
+          <h2 className="text-white text-2xl font-semibold">Newest songs</h2>
         </div>
-        <div>
-          List of Songs
-        </div>
+        <PageContent songs={songs} />
       </div>
     </Box>
   )
