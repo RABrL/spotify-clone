@@ -1,4 +1,15 @@
 import Stripe from 'stripe'
+import { Tables } from './supabase'
+
+export interface Song {
+  id: number
+  user_id: string
+  title: string
+  author: string
+  image_path: string
+  song_path: string
+  created_at: string
+}
 
 export interface UserDetails {
   id: string
