@@ -1,60 +1,157 @@
 'use client'
 
-import {
-  useSessionContext,
-  useSupabaseClient
-} from '@supabase/auth-helpers-react'
+import uniqid from 'uniqid'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import { useState } from 'react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/navigation'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { useEffect } from 'react'
 
-import Modal from './Modal'
 import useModal from '@/hooks/useModalStore'
+import { useUser } from '@/hooks/useUser'
+
+import Modal from '@/components/modals/Modal'
+import Input from '@/components/Input'
+import Button from '@/components/Button'
 
 const UploadModal = () => {
-  const supabaseClient = useSupabaseClient()
-  const router = useRouter()
-  const { session } = useSessionContext()
+  const [isLoading, setIsLoading] = useState(false)
   const { isOpen, onClose, type } = useModal((state) => state)
-
   const isModalOpen = isOpen && type === 'uploadSong'
 
-  useEffect(() => {
-    if (session) {
-      router.refresh()
-      onClose()
+  const { user } = useUser()
+  const supabaseClient = useSupabaseClient()
+  const router = useRouter()
+
+  const { register, handleSubmit, reset } = useForm<FieldValues>({
+    defaultValues: {
+      author: '',
+      title: '',
+      song: null,
+      image: null
     }
-  }, [session, router, onClose])
+  })
 
   const onChange = (open: boolean) => {
-    if (!open) onClose()
+    if (!open) {
+      reset()
+      onClose()
+    }
+  }
+
+  const onSubmit: SubmitHandler<FieldValues> = async (values) => {
+    try {
+      setIsLoading(true)
+
+      const imageFile = values.image?.[0]
+      const songFile = values.song?.[0]
+
+      if (!imageFile || !songFile || !user) {
+        return toast.error('Missing fields')
+      }
+
+      const uniqueID = uniqid()
+
+      // Upload song
+      const { data: songData, error: songError } = await supabaseClient.storage
+        .from('songs')
+        .upload(`song-${values.title}-${uniqueID}`, songFile, {
+          cacheControl: '3600',
+          upsert: false
+        })
+
+      if (songError) {
+        setIsLoading(false)
+        return toast.error('Failed song upload')
+      }
+
+      // Upload image
+      const { data: imageData, error: imageError } =
+        await supabaseClient.storage
+          .from('images')
+          .upload(`image-${values.title}-${uniqueID}`, imageFile, {
+            cacheControl: '3600',
+            upsert: false
+          })
+
+      if (imageError) {
+        setIsLoading(false)
+        return toast.error('Failed image upload')
+      }
+
+      const { error: supabaseError } = await supabaseClient
+        .from('songs')
+        .insert({
+          user_id: user.id,
+          title: values.title,
+          author: values.author,
+          image_path: imageData.path,
+          song_path: songData.path
+        })
+
+      if (supabaseError) {
+        setIsLoading(false)
+        return toast.error(supabaseError.message)
+      }
+
+      router.refresh()
+      toast.success('Song created!')
+      reset()
+      onClose()
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
     <Modal
-      title="Upload Your Song"
-      description="Upload your song to the cloud"
+      title="Add a song"
+      description="Upload an mp3 file"
       isOpen={isModalOpen}
       onChange={onChange}
     >
-      <Auth
-        theme="dark"
-        magicLink
-        providers={['github']}
-        supabaseClient={supabaseClient}
-        appearance={{
-          theme: ThemeSupa,
-          variables: {
-            default: {
-              colors: {
-                brand: '#404040',
-                brandAccent: '#22c55e'
-              }
-            }
-          }
-        }}
-      />
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
+        <Input
+          id="title"
+          disabled={isLoading}
+          {...register('title', { required: true })}
+          placeholder="Song title"
+        />
+        <Input
+          id="author"
+          disabled={isLoading}
+          {...register('author', { required: true })}
+          placeholder="Song author"
+        />
+        <div>
+          <div className="pb-1">Select a song file</div>
+          <Input
+            type="file"
+            id="song"
+            disabled={isLoading}
+            accept=".mp3"
+            {...register('song', { required: true })}
+          />
+        </div>
+        <div>
+          <div className="pb-1">Select an image cover</div>
+          <Input
+            type="file"
+            id="image"
+            disabled={isLoading}
+            accept="image/*"
+            {...register('image', { required: true })}
+          />
+        </div>
+        <Button
+          disabled={isLoading}
+          type="submit"
+        >
+          Create
+        </Button>
+      </form>
     </Modal>
   )
 }

@@ -12,7 +12,7 @@ const useModal = create<ModalStore>((set) => ({
   type: null,
   isOpen: false,
   onOpen: (type) => set({ type, isOpen: true }),
-  onClose: () => set({ isOpen: false })
+  onClose: () => set({ type: null, isOpen: false })
 }))
 
 export default useModal
