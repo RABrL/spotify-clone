@@ -7,8 +7,10 @@ import { Database } from '@/types/supabase'
 const getSongsByUserId = async (): Promise<Song[]> => {
   const supabase = createServerComponentClient<Database>({ cookies })
 
-  const { data: sessionData, error: sessionError } =
-    await supabase.auth.getSession()
+  const {
+    data: { session },
+    error: sessionError
+  } = await supabase.auth.getSession()
 
   if (sessionError) {
     console.log(sessionError.message)
@@ -18,7 +20,7 @@ const getSongsByUserId = async (): Promise<Song[]> => {
   const { data, error } = await supabase
     .from('songs')
     .select('*')
-    .eq('user_id', sessionData.session?.user.id!)
+    .eq('user_id', session?.user.id!)
     .order('created_at', { ascending: false })
 
   if (error) {
