@@ -31,7 +31,8 @@ const SongItem = ({ song, onClick }: SongItemProps) => {
         cursor-pointer
         hover:bg-neutral-400/10
         transition
-        p-3
+        duration-300
+        p-4
       "
     >
       <div
@@ -77,7 +78,7 @@ const SongItem = ({ song, onClick }: SongItemProps) => {
       <div
         className="
           absolute
-          bottom-24
+          bottom-[114px]
           right-5
         "
       >
