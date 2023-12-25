@@ -24,6 +24,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       hover:opacity-75
       transition
     `,
+          disabled && 'opacity-75 cursor-not-allowed',
           className
         )}
         disabled={disabled}
