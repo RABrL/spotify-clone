@@ -24,6 +24,7 @@ const Modal = ({
         backdrop-blur-sm
         fixed
         inset-0
+        z-[1]
       "
       />
       <Dialog.Content
@@ -47,6 +48,7 @@ const Modal = ({
           bg-neutral-800
           p-[25px]
           focus:outline-none
+          z-[2]
         "
       >
         <Dialog.Title
