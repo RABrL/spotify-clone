@@ -108,6 +108,7 @@ const Header = ({ children, className }: HeaderProps) => {
               flex
               items-center
               justify-center
+              cursor-pointer
               hover:opacity-75
               transition
             "
@@ -121,6 +122,7 @@ const Header = ({ children, className }: HeaderProps) => {
               bg-white
               flex
               items-center
+              cursor-pointer
               justify-center
               hover:opacity-75
               transition
@@ -138,23 +140,19 @@ const Header = ({ children, className }: HeaderProps) => {
           "
         >
           {user ? (
-            <div
-              className="
-                flex gap-x-4 items-center
-              "
-            >
+            <div className="flex gap-x-4 items-center">
               <Button
                 onClick={handleLogout}
                 disabled={isLoading}
-                className="bg-white px-6 py-2"
+                className="bg-white px-6 py-1"
               >
                 Logout
               </Button>
               <Button
                 onClick={() => router.push('/account')}
-                className="bg-white"
+                className="bg-white p-2"
               >
-                <FaUserAlt />
+                <FaUserAlt size={18}/>
               </Button>
             </div>
           ) : (
@@ -163,10 +161,10 @@ const Header = ({ children, className }: HeaderProps) => {
                 <Button
                   onClick={() => onOpen('signUp')}
                   className="
-                  bg-transparent
-                  text-neutral-300
-                  font-medium
-                "
+                    bg-transparent
+                    text-neutral-300
+                    font-medium
+                  "
                 >
                   Sign up
                 </Button>
@@ -175,10 +173,10 @@ const Header = ({ children, className }: HeaderProps) => {
                 <Button
                   onClick={() => onOpen('signIn')}
                   className="
-                  bg-white
-                  px-6
-                  py-2
-                "
+                    bg-white
+                    px-6
+                    py-1
+                  "
                 >
                   Log in
                 </Button>
