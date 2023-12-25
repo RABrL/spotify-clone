@@ -74,7 +74,7 @@ const Header = ({ children, className }: HeaderProps) => {
             onClick={() => router.back()}
             className="
               rounded-full
-              bg-neutral-900
+              bg-neutral-800
               flex
               items-center
               justify-center
@@ -88,7 +88,7 @@ const Header = ({ children, className }: HeaderProps) => {
             onClick={() => router.forward()}
             className="
               rounded-full
-              bg-neutral-900
+              bg-neutral-800
               flex
               items-center
               justify-center
