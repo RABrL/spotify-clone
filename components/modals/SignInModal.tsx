@@ -40,6 +40,7 @@ const SignInModal = () => {
       onChange={onChange}
     >
       <Auth
+      localization={{variables:{}}}
         theme="dark"
         magicLink
         providers={['github']}
