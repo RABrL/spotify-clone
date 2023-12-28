@@ -9,7 +9,6 @@ import useModal from '@/hooks/useModalStore'
 import { useUser } from '@/hooks/useUser'
 import { cn } from '@/utils/cn'
 
-import Button from './Button'
 import toast from 'react-hot-toast'
 
 interface LikeButtonProps {
@@ -62,6 +61,7 @@ const LikeButton = ({ songId }: LikeButtonProps) => {
       }
       setIsLiked(false)
       toast.success('Removed from Liked Songs')
+      router.refresh()
       return
     }
 
@@ -75,6 +75,7 @@ const LikeButton = ({ songId }: LikeButtonProps) => {
     }
     setIsLiked(true)
     toast.success('Added to Liked Songs')
+    router.refresh()
   }
 
   return (
