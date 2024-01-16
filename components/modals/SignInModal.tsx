@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { useEffect } from 'react'
-import toast from 'react-hot-toast'
 
 import Modal from './Modal'
 import useModal from '@/hooks/useModalStore'
@@ -40,7 +39,7 @@ const SignInModal = () => {
       onChange={onChange}
     >
       <Auth
-      localization={{variables:{}}}
+        localization={{ variables: {} }}
         theme="dark"
         magicLink
         providers={['github']}

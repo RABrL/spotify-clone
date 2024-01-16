@@ -53,11 +53,11 @@ const MediaItem = ({ onClick, song }: MediaItemProps) => {
           flex-col
           gap-y-1
           overflow-hidden
-          items-start
+          text-start
         "
       >
         <p className="text-white truncate">{song.title}</p>
-        <p className='text-neutral-400 text-sm truncate'>{song.author}</p>
+        <p className="text-neutral-400 text-sm truncate">{song.author}</p>
       </div>
     </button>
   )

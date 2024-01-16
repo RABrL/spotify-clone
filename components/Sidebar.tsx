@@ -37,8 +37,8 @@ const Sidebar = ({ children, songs }: SidebarProps) => {
   )
 
   return (
-    <div className="flex h-full">
-      <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2">
+    <div className="flex h-full p-2 gap-x-2">
+      <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px]">
         <Box>
           <div
             className="
@@ -58,7 +58,7 @@ const Sidebar = ({ children, songs }: SidebarProps) => {
           <Library songs={songs} />
         </Box>
       </div>
-      <main className="h-full flex-1 overflow-y-auto md:py-2">{children}</main>
+      <main className="h-full flex-1 overflow-y-auto">{children}</main>
     </div>
   )
 }

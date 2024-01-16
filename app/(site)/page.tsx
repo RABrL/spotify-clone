@@ -2,7 +2,7 @@ import getSongs from '@/actions/getSongs'
 import Box from '@/components/Box'
 import Header from '@/components/Header'
 import ListItem from '@/components/ListItem'
-import PageContent from '@/components/PageContent'
+import PageContent from '@/app/(site)/components/PageContent'
 
 export const revalidate = 0
 
