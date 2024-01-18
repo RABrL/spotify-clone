@@ -34,7 +34,11 @@ const Search = async ({ searchParams: { title } }: SearchProps) => {
           >
             Search
           </h1>
-          <SearchInput />
+          <div className="flex-[0_1_364px] relative">
+            <form role='search'>
+              <SearchInput />
+            </form>
+          </div>
         </div>
       </Header>
       <SearchContent songs={songs} />
