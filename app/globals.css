@@ -9,3 +9,30 @@ body,
   background-color: black;
   color-scheme: dark;
 }
+
+.layout {
+  grid-template-areas:
+    "left-sidebar main-view right-sidebar"
+    "now-playing-bar now-playing-bar now-playing-bar";
+}
+
+.left-sidebar {
+  grid-area: left-sidebar;
+}
+
+.main-view {
+  grid-area: main-view;
+}
+
+.right-sidebar {
+  grid-area: right-sidebar;
+}
+
+.player {
+  width: 100%;
+  grid-area: now-playing-bar;
+}
+
+[data-right-sidebar-hidden] .main-view {
+  grid-area: main-view/main-view/main-view/right-sidebar;
+}
